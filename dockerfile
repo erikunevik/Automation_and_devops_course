@@ -1,11 +1,13 @@
-
 FROM python:3.11-slim
 
 
 WORKDIR /app
 
+COPY requirements.txt .
+COPY hello_world.py .
 
-COPY 04112025/helloworldapp.py .
+RUN pip install --no-cache-dir -r requirements.txt
 
+EXPOSE 5000
 
-CMD ["python", "helloworldapp.py"]z
+CMD ["python", "hello_world.py"]
