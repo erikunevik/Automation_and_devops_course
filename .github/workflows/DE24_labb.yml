@@ -5,14 +5,30 @@ on:
     inputs:
       user_name:
         description: "Ange ditt namn"
-        required: true
         default: "Okänd användare"
 
 jobs:
-  show-input:
+  jobs-for-main-user:
+    if: ${{ github.event.inputs.user_name == 'erik' }}
     runs-on: ubuntu-latest
     steps:
       - name: Visa användarens input
-        run: echo "Tack ${{ github.event.inputs.user_name }} för ditt bidrag!"
+        run: echo "hej erik!"
+
+  jobs-for-other-user:
+    if: ${{ github.event.inputs.user_name != 'erik' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Visa användarens input
+        run: echo "hej gäst!"
+
+
+
+
+  
+
+   
+
+
 
 
