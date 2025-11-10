@@ -1,0 +1,81 @@
+name: Labb_DE24_Needs//test/build/deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      user_name:
+      description: "Ange om pytest skallköras "ja/nej". Om nej så utförs inte testet och applikationen byggs ej"
+
+jobs:
+  ja:
+  if ${{github.event.inputs.user_name == 'ja'}}
+  
+  runs-on: ubuntu latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          
+      - name: Install pytest
+        run: pip install pytest
+        
+      - name: Run pytest
+        run: pytest -q
+
+  build:
+    steps:
+      needs: test
+      if: ${{ success() }}
+      runs-on: ubuntu-latest
+      steps:
+        - name: Bygger appen
+          run: echo "✅ Pytest godkänt! Bygger nu..."
+
+# Du ska fortsätta med deploy
+        
+
+    build-fail:
+    needs: test
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Avslutar appen
+        run: echo "❌ Pytest underkänt! Avslutar nu..."
+
+        
+
+        
+    
+
+        
+
+
+    
+
+    
+
+      
+        
+
+  nej:
+  if ${{github.event.inputs.user_name == 'nej'}}
+  
+  runs-on: ubuntu latest
+  
+  steps:
+      - name: avsluta
+        run: echo "Programmet avslutas"
+
+
+  
+
+
+      
+
+  
+
+
+
+    
